@@ -5,38 +5,45 @@
 package schoolproject;
 
 import java.util.Scanner;
+
 /**
  *
  * @author RC_Student_lab
  */
 public class Login {
+
     Registration register;
-     
-    public Login(Registration register){
+    String name;
+    String surname;
+
+    public Login(Registration register) {
         this.register = register;
     }
-    
-    public void log(){
+
+    public void log() {
         Scanner scan = new Scanner(System.in);
         String loginUsername;
         String loginPassword;
-        
+
         System.out.println("Enter Username");
         loginUsername = scan.nextLine();
-        
+
         System.out.println("Enter password");
         loginPassword = scan.nextLine();
         
-    }//end of login method
-    
-    public boolean checkUserDetails(String username, String password){
-        
-        if(username.equals(register.username)&&
-               password.equals(register.password)){
-            System.out.println("Welcome" + register.name);
+        //Method to check user details
+        checkUserDetails(loginUsername, loginPassword);
+
+    }//end of login method8
+
+            public boolean checkUserDetails(String username, String password) {
+
+        if (username.equals(register.username)
+                && password.equals(register.password)) {
+            System.out.println("Hello " + name + surname + " It is good to have you again");
             return true;
-        }else{
-            System.out.println("failed attempt");
+        } else {
+            System.out.println("Username or password is incorrect, please try again.");
             return false;
         }
     }// end of check password and username
