@@ -24,9 +24,6 @@ public class Registration {
 
         //prompt user for details 
         //prompt user for name 
-        System.out.println("****************************************");
-        System.out.println("            HELLO NEWBIE!!              ");
-        System.out.println("****************************************");
         System.out.println("Please enter your name: ");
         name = scan.nextLine();
 
@@ -34,11 +31,14 @@ public class Registration {
         System.out.println("Please enter your surname:");
         surname = scan.nextLine();
 
+        System.out.println("***************************************************************");
+        System.out.println("   WELCOME TO REGISTRATION " + name + " " + surname + "!!!     ");
+        System.out.println("***************************************************************");
+
         //prompt user for username
         do {
-            System.out.println("***************************************************************");
-            System.out.println("   WELCOME TO REGISTRATION " + name + " " + surname + "!!!     ");
-            System.out.println("***************************************************************");
+
+             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your username: "
                     + "\n Your username must have an underscore "
                     + "\n It must contain at least 5 characters ");
@@ -47,10 +47,12 @@ public class Registration {
 
         //prompt user for password
         do {
+            
+             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your password. "
                     + "\n"
                     + "Your password must have: "
-                    + "\n ~At most 5 characters. "
+                    + "\n ~At least 8 characters. "
                     + "\n ~At least one speacial character "
                     + "\n ~It must have at least one digit ");
             password = scan.nextLine();
@@ -59,23 +61,22 @@ public class Registration {
 
         //prompt user for number
         do {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your cellphone number: "
-                    + "\n"
                     + "\n Please use your *AREA CODE*");
             cellphoneNumber = scan.nextLine();
         } while (!checkCellphoneNumber(cellphoneNumber));
     }// end of user input 
 
     public boolean checkUsername(String username) {
-        //username must have an underscore(_)
-        //five characters
+        //username must have an underscore(_)        //five characters
         if (username.contains("_") && username.length() <= 5) {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Username is successfully captured.");
             return true;
         } else {
             System.out.println("Your username is not correctly formatted, "
-                    + " \n ~Please ensure that your username contains an undersocre. "
-                    + "\n  ~It must have no more than five characters in length.");
+                    + " \n ~Please try again. ");
             return false;
         }
 
@@ -97,13 +98,12 @@ public class Registration {
 
         if (hasMinLength && hasDigit && hasUppercase && hasSpecialCharacters) {
 
+            System.out.println("\n");
             System.out.println("Password is successfully capture.");
             return true;
         } else {
             System.out.println("Your password is not correctly formatted "
-                    + "\n  ~Please ensure that the password contains at least 8 characters. "
-                    + "\na ~It must have a capital letter. "
-                    + "\na ~It must have a number and a speacial character. ");
+                    + "\n Please try again.");
             return false;
         }
 
