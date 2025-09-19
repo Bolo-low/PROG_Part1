@@ -50,7 +50,6 @@ public class Registration {
 
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your password. "
-                    
                     + "Your password must have: "
                     + "\n ~At least 8 characters. "
                     + "\n ~At least one speacial character "
@@ -75,6 +74,8 @@ public class Registration {
             System.out.println("Username is successfully captured.");
             return true;
         } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             System.out.println("Your username is not correctly formatted, "
                     + " \n ~Please try again. ");
             return false;
@@ -98,10 +99,13 @@ public class Registration {
 
         if (hasMinLength && hasDigit && hasUppercase && hasSpecialCharacters) {
 
-           
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             System.out.println("Password is successfully capture.");
             return true;
         } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             System.out.println("Your password is not correctly formatted "
                     + "\n Please try again.");
             return false;
@@ -121,9 +125,13 @@ public class Registration {
         boolean hasDigit = cellphoneNumber.matches(".*\\d{9}.*");
 
         if (hasCountryCode && hasMaxLength && hasDigit) {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             System.out.println("Your cellphone number is successfully captured");
             return true;
         } else {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
             System.out.println("Your cellphone number  is not correctly formatted. "
                     + "\n It does not contain international code. ");
             return false;

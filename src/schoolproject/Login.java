@@ -40,7 +40,8 @@ public class Login {
 
         if (username.equals(register.username)
                 && password.equals(register.password)) {
-            System.out.println("Hello " + register.name + " " +register.surname + " It is good to have you again");
+            
+            System.out.println("Hello " + register.name + " " +register.surname + " It is good to have you again.");
             return true;
         } else {
             System.out.println("Username or password is incorrect.");

@@ -69,7 +69,7 @@ public class SchoolProject {
         System.out.println("    ~~~~~WELCOME TO REGISTRATION~~~~~~~");
         System.out.println("------------------------------------------");
         register.userInput(); // call once
-        System.out.println("Reg successful");
+        System.out.println("           REG IS SUCCESSFUL");
         System.out.println("You may now login.");
         System.out.println("Press Enter to return to main menu.");
 
