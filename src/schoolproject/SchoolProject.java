@@ -71,7 +71,7 @@ public class SchoolProject {
         register.userInput(); // call once
         System.out.println("Reg successful");
         System.out.println("You may now login.");
-        System.out.println("Press Enter to return to main menu...");
+        System.out.println("Press Enter to return to main menu.");
 
         scanner.nextLine();
     }
@@ -81,7 +81,7 @@ public class SchoolProject {
         System.out.println("~~~~~~~WELCOME TO THE LOGIN SITE~~~~~~~~");
         System.out.println("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
         login.log();
-        System.out.println("To try again, return to main menu. Press enter.");
+        System.out.println("Return to main menu. Press enter.");
         scanner.nextLine();
     }
 

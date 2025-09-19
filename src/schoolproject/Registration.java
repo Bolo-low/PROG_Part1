@@ -23,34 +23,34 @@ public class Registration {
     public void userInput() {
 
         //prompt user for details 
-        //prompt user for name 
-        System.out.println("Please enter your name: ");
+        //prompt user for name
+        System.out.println("  Please enter your name: ");
+
         name = scan.nextLine();
 
         //prompt user for surname 
-        System.out.println("Please enter your surname:");
-        surname = scan.nextLine();
+        System.out.println("  Please enter your surname:");
 
+        surname = scan.nextLine();
         System.out.println("***************************************************************");
         System.out.println("   WELCOME TO REGISTRATION " + name + " " + surname + "!!!     ");
         System.out.println("***************************************************************");
-
         //prompt user for username
         do {
 
-             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your username: "
                     + "\n Your username must have an underscore "
                     + "\n It must contain at least 5 characters ");
             username = scan.nextLine();
+
         } while (!checkUsername(username));
 
         //prompt user for password
         do {
-            
-             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println("Please enter your password. "
-                    + "\n"
+                    
                     + "Your password must have: "
                     + "\n ~At least 8 characters. "
                     + "\n ~At least one speacial character "
@@ -98,7 +98,7 @@ public class Registration {
 
         if (hasMinLength && hasDigit && hasUppercase && hasSpecialCharacters) {
 
-            System.out.println("\n");
+           
             System.out.println("Password is successfully capture.");
             return true;
         } else {

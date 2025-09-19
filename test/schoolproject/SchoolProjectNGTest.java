@@ -59,7 +59,7 @@ public class SchoolProjectNGTest {
     @Test
     public void usernameWithoutUnderscoreTest() {
         // Invalid: missing underscore 
-        assertFalse(Regtest.checkUsername("Bonol"));
+        assertFalse(Regtest.checkUsername("Bonolo"));
     }//Test_2
 
     @Test
