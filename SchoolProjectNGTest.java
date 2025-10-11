@@ -182,25 +182,26 @@ public class SchoolProjectNGTest {
         assertFalse(hash.isEmpty(), "Message hash should not be empty");
     }//end of MessageHash test
 
-    // SentMessage Test Class
+    //sent message 
     @Test
-    public void testMessageStatusSent() {
-        assertEquals("sent", logicTest.sentMessage("1"), "Message should be marked as sent");
-    }
+public void testMessageStatusSent() {
+    assertEquals("sent", logicTest.sentMessage("1"), "Message should be marked as sent");
+}
 
-    @Test
-    public void testMessageStatusStored() {
-        assertEquals("stored", logicTest.sentMessage("2"), "Message should be marked as stored");
-    }
+@Test
+public void testMessageStatusStored() {
+    assertEquals("stored", logicTest.sentMessage("2"), "Message should be marked as stored");
+}
 
-    @Test
-    public void testMessageStatusDisregarded() {
-        assertEquals("disregarded", logicTest.sentMessage("0"), "Message should be marked as disregarded");
-    }
+@Test
+public void testMessageStatusDisregarded() {
+    assertEquals("disregarded", logicTest.sentMessage("0"), "Message should be marked as disregarded");
+}
 
-    @Test
-    public void testMessageStatusInvalid() {
-        assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
-    }
+@Test
+public void testMessageStatusInvalid() {
+    assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
+}
+
 
 }

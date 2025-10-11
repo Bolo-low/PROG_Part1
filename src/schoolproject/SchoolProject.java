@@ -1,5 +1,7 @@
+package schoolproject;
 
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 import schoolproject.Login;
 import schoolproject.Registration;
 
@@ -9,6 +11,7 @@ public class SchoolProject {
         Scanner scanner = new Scanner(System.in);
         Registration register = new Registration();
         Login login = new Login(register);
+        logicClass logic = new logicClass(); // messaging logic instance
 
         int choice;
         do {
@@ -38,6 +41,7 @@ public class SchoolProject {
         } while (choice != 3);
 
         scanner.close();
+
     }
 
     // menu method
@@ -88,4 +92,6 @@ public class SchoolProject {
     private static void handleCancel() {
         System.out.println("Thank you. Goodbye");
     }
+    
+    
 }

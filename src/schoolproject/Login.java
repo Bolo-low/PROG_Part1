@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package schoolproject;
-
+import javax.swing.JOptionPane;
 import java.util.Scanner;
 
 /**
@@ -20,21 +20,25 @@ public class Login {
         this.register = register;
     }
 
-    public void log() {
-        Scanner scan = new Scanner(System.in);
-        String loginUsername;
-        String loginPassword;
-        
-        System.out.println("Enter Username");
-        loginUsername = scan.nextLine();
+    public boolean log() {
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Enter Username");
+    String loginUsername = scan.nextLine();
 
-        System.out.println("Enter password");
-        loginPassword = scan.nextLine();
+    System.out.println("Enter password");
+    String loginPassword = scan.nextLine();
 
-        //Method to check user details
-        checkUserDetails(loginUsername, loginPassword);
+    boolean success = checkUserDetails(loginUsername, loginPassword);
 
-    }//end of login method8
+    if (success) {
+        JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
+        logicClass logic = new logicClass();
+                messMenu(logic);
+    }
+
+    return success;
+}
+
 
     public boolean checkUserDetails(String username, String password) {
 
@@ -48,4 +52,55 @@ public class Login {
             return false;
         }
     }// end of check password and username
+    
+    //Mess Menu Methods
+    private static void messMenu(logicClass logic){
+    
+        int choice;
+        
+        do{
+        
+            choice = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                    "Message Menu: \n"
+                              + " 1. Send message\n"
+                               + "2. Show recent message (coming soon)\n"
+                               + "3. Exit"));
+            
+            switch(choice){
+                case 1:
+                    int numberOfMess = Integer.parseInt(JOptionPane.showInputDialog(null, "How many messages do you want to send?"));
+                    
+                    for(int i = 0; i < numberOfMess; i++){
+                    
+                        String id = JOptionPane.showInputDialog(null, "Enter messgae ID (max 10 digits):");
+                        if (!logic.checkMessageID(id)){
+                        JOptionPane.showMessageDialog(null, "Invaild Message ID");
+                        continue;
+                        }
+                        
+                        String text = JOptionPane.showInputDialog(null, "Enter your Message text:");
+                        String hash = logic.createMessageHash(id, i + 1 , text);
+                        
+                        JOptionPane.showMessageDialog(null, "Message Hash:\n" + hash);
+                        
+                       // String result = logic.sentMessage(choice);
+                        JOptionPane.showMessageDialog(null, "Message Status: " + choice);
+                        
+                    }
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "Feature coming soon!");
+                    break;
+                    
+                case 3:
+                    JOptionPane.showMessageDialog(null, "Exiting the chat");
+                    break;
+                    
+                default:
+                    JOptionPane.showMessageDialog(null, "Invaild option, try again.");
+                    break;
+            }
+            
+        }while (choice != 3);
+    }
 }
