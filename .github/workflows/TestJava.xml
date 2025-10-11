@@ -1,0 +1,8 @@
+<testsuite name="SchoolProjectNGTest" tests="5">
+    <testcase classname="SchoolProjectNGTest" name="validUsernameTest"/>
+    <testcase classname="SchoolProjectNGTest" name="validPasswordTest"/>
+    <testcase classname="SchoolProjectNGTest" name="validCellphoneNumber"/>
+    <testcase classname="SchoolProjectNGTest" name="validMessageLength"/>
+    <testcase classname="SchoolProjectNGTest" name="testStoreMessageAsJSON"/>
+</testsuite>
+
