@@ -202,5 +202,13 @@ public class SchoolProjectNGTest {
     public void testMessageStatusInvalid() {
         assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
     }
+    
+    @Test
+    public void testPrintMessageFormat() {
+        String output = logicTest.printMessage();
+        assertTrue(output.contains("Message ID:"), "Output should include Message ID");
+        assertTrue(output.contains("Recipient:"), "Output should include Recipient");
+        assertTrue(output.contains("Message Hash:"), "Output should include Message Hash");
+    }
 
 }
