@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package schoolproject;
+
 import javax.swing.JOptionPane;
 import java.util.Scanner;
 
@@ -21,86 +22,95 @@ public class Login {
     }
 
     public boolean log() {
-    Scanner scan = new Scanner(System.in);
-    System.out.println("Enter Username");
-    String loginUsername = scan.nextLine();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter Username");
+        String loginUsername = scan.nextLine();
 
-    System.out.println("Enter password");
-    String loginPassword = scan.nextLine();
+        System.out.println("Enter password");
+        String loginPassword = scan.nextLine();
 
-    boolean success = checkUserDetails(loginUsername, loginPassword);
+        boolean success = checkUserDetails(loginUsername, loginPassword);
 
-    if (success) {
-        JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
-        logicClass logic = new logicClass();
-                messMenu(logic);
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
+            logicClass logic = new logicClass();
+            messMenu(logic);
+        }
+
+        return success;
     }
-
-    return success;
-}
-
 
     public boolean checkUserDetails(String username, String password) {
 
         if (username.equals(register.username)
                 && password.equals(register.password)) {
-            
-            System.out.println("Hello " + register.name + " " +register.surname + " It is good to have you again.");
+
+            System.out.println("Hello " + register.name + " " + register.surname + " It is good to have you again.");
             return true;
         } else {
             System.out.println("Username or password is incorrect.");
             return false;
         }
     }// end of check password and username
-    
+
     //Mess Menu Methods
-    private static void messMenu(logicClass logic){
-    
+    private static void messMenu(logicClass logic) {
+
         int choice;
-        
-        do{
-        
-            choice = Integer.parseInt(JOptionPane.showInputDialog(null, 
-                    "Message Menu: \n"
-                              + " 1. Send message\n"
-                               + "2. Show recent message (coming soon)\n"
-                               + "3. Exit"));
-            
-            switch(choice){
+
+        do {
+
+            choice = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "Welcome to The Message Menu: \n"
+                    + "1. Send message\n"
+                    + "2. Show recent message (coming soon)\n"
+                    + "3. Exit"));
+
+            switch (choice) {
                 case 1:
-                    int numberOfMess = Integer.parseInt(JOptionPane.showInputDialog(null, "How many messages do you want to send?"));
-                    
-                    for(int i = 0; i < numberOfMess; i++){
-                    
-                        String id = JOptionPane.showInputDialog(null, "Enter messgae ID (max 10 digits):");
-                        if (!logic.checkMessageID(id)){
-                        JOptionPane.showMessageDialog(null, "Invaild Message ID");
-                        continue;
+                    int numberOfMess = Integer.parseInt(JOptionPane.showInputDialog(null, "Hi there :) How many messages do you want to send?"));
+
+                    for (int i = 0; i < numberOfMess; i++) {
+
+                        String id = JOptionPane.showInputDialog(null, "Enter the messgae ID (max 10 digits):");
+                        if (!logic.checkMessageID(id)) {
+                            JOptionPane.showMessageDialog(null, "Message ID Invaild!");
+                            continue;
                         }
-                        
+
+                        // Call recipient cell method here
+                        String cell = JOptionPane.showInputDialog(null, "Enter reciever's cell number (+27...)");
+                        int validCell = logic.checkRecipientCell(cell);
+
+                        if (validCell == 0) {
+                            JOptionPane.showMessageDialog(null, "Recipient Number Invalid!");
+                            continue;
+                        }
+
                         String text = JOptionPane.showInputDialog(null, "Enter your Message text:");
-                        String hash = logic.createMessageHash(id, i + 1 , text);
-                        
+                        String hash = logic.createMessageHash(id, i + 1, text);
+
                         JOptionPane.showMessageDialog(null, "Message Hash:\n" + hash);
-                        
-                       // String result = logic.sentMessage(choice);
-                        JOptionPane.showMessageDialog(null, "Message Status: " + choice);
-                        
+
+                        // ✅ Trigger printMessage before status options
+                        JOptionPane.showMessageDialog(null, logic.printMessage());
+
+                        logic.handleSendMessage(); // Offers sent, stored, or disregarded
                     }
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Feature coming soon!");
+                    JOptionPane.showMessageDialog(null, "This Feature is coming soon!");
                     break;
-                    
+
                 case 3:
                     JOptionPane.showMessageDialog(null, "Exiting the chat");
                     break;
-                    
+
                 default:
                     JOptionPane.showMessageDialog(null, "Invaild option, try again.");
                     break;
             }
-            
-        }while (choice != 3);
+
+        } while (choice != 3);
     }
 }

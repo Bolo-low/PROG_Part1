@@ -92,6 +92,5 @@ public class SchoolProject {
     private static void handleCancel() {
         System.out.println("Thank you. Goodbye");
     }
-    
-    
+
 }

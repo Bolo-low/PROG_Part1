@@ -182,26 +182,33 @@ public class SchoolProjectNGTest {
         assertFalse(hash.isEmpty(), "Message hash should not be empty");
     }//end of MessageHash test
 
-    //sent message 
+    //sent message --this was the bane of my exitence sir i could not get 100% test rate until i changed it around
     @Test
-public void testMessageStatusSent() {
-    assertEquals("sent", logicTest.sentMessage("1"), "Message should be marked as sent");
-}
+    public void testMessageStatusSent() {
+        assertEquals("sent", logicTest.sentMessage("1"), "Message should be marked as sent");
+    }
 
-@Test
-public void testMessageStatusStored() {
-    assertEquals("stored", logicTest.sentMessage("2"), "Message should be marked as stored");
-}
+    @Test
+    public void testMessageStatusStored() {
+        assertEquals("stored", logicTest.sentMessage("2"), "Message should be marked as stored");
+    }
 
-@Test
-public void testMessageStatusDisregarded() {
-    assertEquals("disregarded", logicTest.sentMessage("0"), "Message should be marked as disregarded");
-}
+    @Test
+    public void testMessageStatusDisregarded() {
+        assertEquals("disregarded", logicTest.sentMessage("0"), "Message should be marked as disregarded");
+    }
 
-@Test
-public void testMessageStatusInvalid() {
-    assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
-}
+    @Test
+    public void testMessageStatusInvalid() {
+        assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
+    }
 
+    @Test
+    public void testPrintMessageFormat() {
+        String output = logicTest.printMessage();
+        assertTrue(output.contains("Message ID:"), "Output should include Message ID");
+        assertTrue(output.contains("Recipient:"), "Output should include Recipient");
+        assertTrue(output.contains("Message Hash:"), "Output should include Message Hash");
+    }
 
 }
