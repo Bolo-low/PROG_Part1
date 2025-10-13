@@ -60,19 +60,18 @@ public class logicClass {
                 return "invalid";
         }
     }
-    
+
     // This method uses JOptionPane to collect user input and display the result
-public void handleSendMessage() {
-    String choice = JOptionPane.showInputDialog(null,
-        "Choose options 0-2:\n" +
-        "1. Send Message\n" +
-        "2. Store Message\n" +
-        "0. Disregard Message");
+    public void handleSendMessage() {
+        String choice = JOptionPane.showInputDialog(null,
+                "Choose options 0-2:\n"
+                + "1. Send Message\n"
+                + "2. Store Message\n"
+                + "0. Disregard Message");
 
-    String result = sentMessage(choice);
-    JOptionPane.showMessageDialog(null, "Message Status: " + result);
-}
-
+        String result = sentMessage(choice);
+        JOptionPane.showMessageDialog(null, "Message Status: " + result);
+    }
 
     //This is the joption logic that is meant to be for the sent message method
     public void handleUserMessage() {
@@ -84,9 +83,9 @@ public void handleSendMessage() {
     // Save message to JSON file
     public void storeMessage() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message", printMessage()); 
+        jsonObject.put("message", printMessage());
         try (FileWriter file = new FileWriter("messages.json")) {
-            file.write(jsonObject.toJSONString()); 
+            file.write(jsonObject.toJSONString());
             System.out.println("Message saved to messages.json");
         } catch (IOException e) {
             e.printStackTrace();

@@ -71,12 +71,8 @@ public class Login {
                     int numberOfMess = Integer.parseInt(JOptionPane.showInputDialog(null, "Hi there :) How many messages do you want to send?"));
 
                     for (int i = 0; i < numberOfMess; i++) {
-
-                        String id = JOptionPane.showInputDialog(null, "Enter the messgae ID (max 10 digits):");
-                        if (!logic.checkMessageID(id)) {
-                            JOptionPane.showMessageDialog(null, "Message ID Invaild!");
-                            continue;
-                        }
+                        // Automatically generate a random 10-digit message ID
+                        String id = String.valueOf(1000000000 + new java.util.Random().nextInt(900000000));
 
                         // Call recipient cell method here
                         String cell = JOptionPane.showInputDialog(null, "Enter reciever's cell number (+27...)");
@@ -92,7 +88,6 @@ public class Login {
 
                         JOptionPane.showMessageDialog(null, "Message Hash:\n" + hash);
 
-                        // ✅ Trigger printMessage before status options
                         JOptionPane.showMessageDialog(null, logic.printMessage());
 
                         logic.handleSendMessage(); // Offers sent, stored, or disregarded

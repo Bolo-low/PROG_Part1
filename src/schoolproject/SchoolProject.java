@@ -66,7 +66,7 @@ public class SchoolProject {
         scanner.nextLine(); // consume end-of-line
         return choice;
     }
-
+ 
     private static void handleReg(Scanner scanner, Registration register) {
 
         System.out.println("------------------------------------------");
