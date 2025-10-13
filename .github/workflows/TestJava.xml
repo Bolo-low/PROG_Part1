@@ -1,8 +1,33 @@
-<testsuite name="SchoolProjectNGTest" tests="5">
-    <testcase classname="SchoolProjectNGTest" name="validUsernameTest"/>
-    <testcase classname="SchoolProjectNGTest" name="validPasswordTest"/>
-    <testcase classname="SchoolProjectNGTest" name="validCellphoneNumber"/>
-    <testcase classname="SchoolProjectNGTest" name="validMessageLength"/>
-    <testcase classname="SchoolProjectNGTest" name="testStoreMessageAsJSON"/>
-</testsuite>
+name: Java TestNG Automation (Ant Build)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Install Apache Ant
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ant
+
+      - name: Verify Ant installation
+        run: ant -version
+
+      - name: Run Ant build and TestNG tests
+        run: ant test
 
