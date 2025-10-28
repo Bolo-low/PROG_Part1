@@ -136,7 +136,8 @@ public class SchoolProjectNGTest {
     }
 
     //Logic Class 
-    logicClass logicTest = new logicClass();
+    MessageManager manager = new MessageManager(100);
+    logicClass logicTest = new logicClass(manager);
 
     @Test
     public void validRecipientCell() {
@@ -202,7 +203,7 @@ public class SchoolProjectNGTest {
     public void testMessageStatusInvalid() {
         assertEquals("invalid", logicTest.sentMessage("9"), "Invalid input should return 'invalid'");
     }
-    
+
     @Test
     public void testPrintMessageFormat() {
         String output = logicTest.printMessage();

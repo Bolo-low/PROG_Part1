@@ -33,8 +33,9 @@ public class Login {
 
         if (success) {
             JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
-            logicClass logic = new logicClass();
-            messMenu(logic);
+            MessageManager manager = new MessageManager(100);
+            logicClass logic = new logicClass(manager);
+           messMenu(logic, manager);
         }
 
         return success;
@@ -54,7 +55,7 @@ public class Login {
     }// end of check password and username
 
     //Mess Menu Methods
-    private static void messMenu(logicClass logic) {
+    private static void messMenu(logicClass logic, MessageManager manager) {
 
         int choice;
 
@@ -62,9 +63,12 @@ public class Login {
 
             choice = Integer.parseInt(JOptionPane.showInputDialog(null,
                     "Welcome to The Message Menu: \n"
-                    + "1. Send message\n"
-                    + "2. Show recent message (coming soon)\n"
-                    + "3. Exit"));
+                    + "1. Send Message\n"
+                    + "2. Search by Message ID\n"
+                    + "3. Search by Hash\n"
+                    + "4. Search by Recipient\n"
+                    + "5. Delete Message\n"
+                    + "6. Exit"));
 
             switch (choice) {
                 case 1:
@@ -94,10 +98,18 @@ public class Login {
                     }
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "This Feature is coming soon!");
+                    manager.searchByMessageID();
                     break;
-
                 case 3:
+                    manager.searchByMessageHash();
+                    break;
+                case 4:
+                    manager.searchByRecipient();
+                    break;
+                case 5:
+                    manager.deleteByMessageID();
+                    break;
+                case 6:
                     JOptionPane.showMessageDialog(null, "Exiting the chat");
                     break;
 
@@ -106,6 +118,6 @@ public class Login {
                     break;
             }
 
-        } while (choice != 3);
+        } while (choice != 6);
     }
 }

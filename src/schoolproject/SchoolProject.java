@@ -11,7 +11,8 @@ public class SchoolProject {
         Scanner scanner = new Scanner(System.in);
         Registration register = new Registration();
         Login login = new Login(register);
-        logicClass logic = new logicClass(); // messaging logic instance
+        MessageManager manager = new MessageManager(100);
+        logicClass logic = new logicClass(manager); // messaging logic instance
 
         int choice;
         do {

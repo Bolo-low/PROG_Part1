@@ -16,6 +16,11 @@ public class logicClass {
     private String messageHash;
     private int totalMessage = 0;
     private String randomText = "";
+    private MessageManager manager;
+
+    public logicClass(MessageManager manager) {
+        this.manager = manager;
+    }
 
     // Check message ID (must be 1–10 digits)
     public boolean checkMessageID(String id) {
@@ -70,6 +75,9 @@ public class logicClass {
                 + "0. Disregard Message");
 
         String result = sentMessage(choice);
+         // Add to MessageManager for tracking
+        manager.addMessage(messageId, messageHash, recipient, randomText, result);
+
         JOptionPane.showMessageDialog(null, "Message Status: " + result);
     }
 
