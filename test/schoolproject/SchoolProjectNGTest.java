@@ -147,4 +147,6 @@ public class SchoolProjectNGTest {
 
     @Test
     public void testMessageStatusInvalid() {
-        assertEquals(logicTest.sentMessage("9"),
+        assertEquals(logicTest.sentMessage("9"), "invalid");
+    }
+}
