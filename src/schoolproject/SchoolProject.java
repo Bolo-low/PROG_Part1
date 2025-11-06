@@ -1,97 +1,81 @@
 package schoolproject;
 
-import java.util.Scanner;
 import javax.swing.JOptionPane;
-import schoolproject.Login;
-import schoolproject.Registration;
 
 public class SchoolProject {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Create shared objects
         Registration register = new Registration();
-        Login login = new Login(register);
         MessageManager manager = new MessageManager(100);
-        logicClass logic = new logicClass(manager); // messaging logic instance
+        logicClass logic = new logicClass(manager);
+        Login login = new Login(register, manager, logic);
 
-        int choice;
+        // Main menu loop (JOptionPane only)
+        int choice = 0;
         do {
-            menu();
-            choice = menuChoice(scanner);      // << read choice each loop
+            String input = JOptionPane.showInputDialog(
+                    "****************************************\n"
+                    + "        ~~~~HELLO~~NEWBIE~~~~\n"
+                    + "    Please enter your choice (1 to 6)\n"
+                    + " 1. Register\n"
+                    + " 2. Login\n"
+                    + " 3. Load Sample Test Data\n"
+                    + " 4. View Message Report\n"
+                    + " 5. Display Longest Message\n"
+                    + " 6. Cancel/Exit\n"
+                    + "****************************************"
+            );
+            if (input == null) {
+                choice = 6;
+            } else if (!input.matches("[1-6]")) {
+                JOptionPane.showMessageDialog(null, "Invalid option. Please select 1–6.");
+                continue;
+            } else {
+                choice = Integer.parseInt(input);
+            }
 
             switch (choice) {
                 case 1:
-                    handleReg(scanner, register);
+                    JOptionPane.showMessageDialog(null, "Opening Registration...");
+                    register.userInput();
+                    JOptionPane.showMessageDialog(null, "Registration successful! You may now login.");
                     break;
 
                 case 2:
-                    handleLog(scanner, login);
+                    JOptionPane.showMessageDialog(null, "Opening Login...");
+                    boolean ok = login.log(); // login will open messaging menu on success
+                    if (!ok) {
+                        // login.log already shows failure messages
+                    }
                     break;
-
+                    //Load Sample Test Data automatically fills the system with 
+                    //messages so all message features can be tested without sending new messages.
+                    //pick this option before picking the the 4th or 5th option so the messages can load
                 case 3:
-                    handleCancel();
+                    int confirm = JOptionPane.showConfirmDialog(null,
+                            "This will add sample messages to the system. Continue?",
+                            "Load Sample Data",
+                            JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        manager.loadTestData();
+                        JOptionPane.showMessageDialog(null, "Sample data loaded.");
+                    }
                     break;
 
-                default:
-                    System.out.println("Invalid option. Please select 1-3.");
+                case 4:
+                    manager.displayReport();
+                    break;
+
+                case 5:
+                    manager.displayLongestMessage();
+                    break;
+
+                case 6:
+                    JOptionPane.showMessageDialog(null, "Thank you. Goodbye!");
                     break;
             }
 
-            System.out.println();
-
-        } while (choice != 3);
-
-        scanner.close();
-
+        } while (6 != choice);
     }
-
-    // menu method
-    private static void menu() {
-        System.out.println("****************************************");
-        System.out.println("            HELLO NEWBIE!!              ");
-        System.out.println("    Please enter your choice ( 1-3 ).   ");
-        System.out.println(" 1. Register.");
-        System.out.println(" 2. Login. ");
-        System.out.println(" 3. Cancel.");
-        System.out.println("****************************************");
-    }
-
-    private static int menuChoice(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Invalid");
-            scanner.next();
-            System.out.println("Please select a choice.");
-        }
-
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume end-of-line
-        return choice;
-    }
- 
-    private static void handleReg(Scanner scanner, Registration register) {
-
-        System.out.println("------------------------------------------");
-        System.out.println("    ~~~~~WELCOME TO REGISTRATION~~~~~~~");
-        System.out.println("------------------------------------------");
-        register.userInput(); // call once
-        System.out.println("           REG IS SUCCESSFUL");
-        System.out.println("You may now login.");
-        System.out.println("Press Enter to return to main menu.");
-
-        scanner.nextLine();
-    }
-
-    private static void handleLog(Scanner scanner, Login login) {
-        System.out.println("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
-        System.out.println("~~~~~~~WELCOME TO THE LOGIN SITE~~~~~~~~");
-        System.out.println("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*");
-        login.log();
-        System.out.println("Return to main menu. Press enter.");
-        scanner.nextLine();
-    }
-
-    private static void handleCancel() {
-        System.out.println("Thank you. Goodbye");
-    }
-
 }

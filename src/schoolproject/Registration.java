@@ -1,142 +1,99 @@
 package schoolproject;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author RC_Student_lab
- */
 public class Registration {
 
-    Scanner scan = new Scanner(System.in);
-
-    String name;
-    String surname;
-    String username;
-    String password;
-    String cellphoneNumber;
+    public String name;
+    public String surname;
+    public String username;
+    public String password;
+    public String cellphoneNumber;
 
     public void userInput() {
+        // Name
+        name = JOptionPane.showInputDialog("Please enter your name:");
+        if (name == null) return;
 
-        //prompt user for details 
-        //prompt user for name
-        System.out.println("  Please enter your name: ");
+        // Surname
+        surname = JOptionPane.showInputDialog("Please enter your surname:");
+        if (surname == null) return;
 
-        name = scan.nextLine();
+        JOptionPane.showMessageDialog(null,
+                "WELCOME TO REGISTRATION " + name + " " + surname + "!!!");
 
-        //prompt user for surname 
-        System.out.println("  Please enter your surname:");
-
-        surname = scan.nextLine();
-        System.out.println("***************************************************************");
-        System.out.println("   WELCOME TO REGISTRATION " + name + " " + surname + "!!!     ");
-        System.out.println("***************************************************************");
-        //prompt user for username
+        // Username
         do {
-
-            System.out.println("Please enter your username: "
-                    + "\n Your username must have an underscore "
-                    + "\n It must contain at least 5 characters ");
-            username = scan.nextLine();
-
+            username = JOptionPane.showInputDialog(
+                    "Please enter your username:\n"
+                    + "• Must contain an underscore\n"
+                    + "• Must have at least 5 characters"
+            );
+            if (username == null) return;
         } while (!checkUsername(username));
 
-        //prompt user for password
+        // Password
         do {
-
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("Please enter your password. "
-                    + "Your password must have: "
-                    + "\n ~At least 8 characters. "
-                    + "\n ~At least one speacial character "
-                    + "\n ~It must have at least one digit ");
-            password = scan.nextLine();
-
+            password = JOptionPane.showInputDialog(
+                    "Please enter your password:\n"
+                    + "• At least 8 characters\n"
+                    + "• At least one special character (!@#$%^&*()_-)\n"
+                    + "• At least one digit\n"
+                    + "• At least one uppercase letter"
+            );
+            if (password == null) return;
         } while (!checkPassword(password));
 
-        //prompt user for number
+        // Cellphone number
         do {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("Please enter your cellphone number: "
-                    + "\n Please use your *AREA CODE*");
-            cellphoneNumber = scan.nextLine();
+            cellphoneNumber = JOptionPane.showInputDialog(
+                    "Please enter your cellphone number:\n"
+                    + "Format: +27XXXXXXXXX (12 characters total)"
+            );
+            if (cellphoneNumber == null) return;
         } while (!checkCellphoneNumber(cellphoneNumber));
-    }// end of user input 
+    }
 
     public boolean checkUsername(String username) {
-        //username must have an underscore(_)        //five characters
-        if (username.contains("_") && username.length() <= 5) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("Username is successfully captured.");
+        if (username.contains("_") && username.length() >= 5) {
+            JOptionPane.showMessageDialog(null, "Username successfully captured!");
             return true;
         } else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-            System.out.println("Your username is not correctly formatted, "
-                    + " \n ~Please try again. ");
+            JOptionPane.showMessageDialog(null,
+                    "Your username is not correctly formatted.\nPlease try again.");
             return false;
         }
-
-    }// end of checkUsername
+    }
 
     public boolean checkPassword(String password) {
-
-        //check password length
         boolean hasMinLength = password.length() >= 8;
-
-        //check password has uppercase
         boolean hasUppercase = password.matches(".*[A-Z].*");
-
-        //check if password contains a number
         boolean hasDigit = password.matches(".*\\d.*");
-
-        //check if password has special character
         boolean hasSpecialCharacters = password.matches(".*[!@#$%^&*()_-].*");
 
         if (hasMinLength && hasDigit && hasUppercase && hasSpecialCharacters) {
-
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-            System.out.println("Password is successfully capture.");
+            JOptionPane.showMessageDialog(null, "Password successfully captured!");
             return true;
         } else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-            System.out.println("Your password is not correctly formatted "
-                    + "\n Please try again.");
+            JOptionPane.showMessageDialog(null,
+                    "Your password is not correctly formatted.\nPlease try again.");
             return false;
         }
-
-    }//end of checkPassword
+    }
 
     public boolean checkCellphoneNumber(String cellphoneNumber) {
-
-        //check country code
-        boolean hasCountryCode = cellphoneNumber.contains("+27");
-
-        //check length
-        boolean hasMaxLength = cellphoneNumber.length() == 12;
-
-        // contains numbers only
-        boolean hasDigit = cellphoneNumber.matches(".*\\d{9}.*");
+        boolean hasCountryCode = cellphoneNumber != null && cellphoneNumber.startsWith("+27");
+        boolean hasMaxLength = cellphoneNumber != null && cellphoneNumber.length() == 12;
+        boolean hasDigit = cellphoneNumber != null && cellphoneNumber.matches("\\+27\\d{9}");
 
         if (hasCountryCode && hasMaxLength && hasDigit) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-            System.out.println("Your cellphone number is successfully captured");
+            JOptionPane.showMessageDialog(null, "Cellphone number successfully captured!");
             return true;
         } else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-            System.out.println("Your cellphone number  is not correctly formatted. "
-                    + "\n It does not contain international code. ");
+            JOptionPane.showMessageDialog(null,
+                    "Your cellphone number is not correctly formatted.\n"
+                    + "Make sure it starts with +27 and contains 9 digits.");
             return false;
         }
-
-    }//end of checkNumber
-
-}//end of registration
+    }
+}

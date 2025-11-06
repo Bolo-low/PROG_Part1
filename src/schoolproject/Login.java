@@ -1,123 +1,144 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package schoolproject;
 
 import javax.swing.JOptionPane;
-import java.util.Scanner;
 
-/**
- *
- * @author RC_Student_lab
- */
 public class Login {
 
-    Registration register;
-    String name;
-    String surname;
+    private Registration register;
+    private MessageManager manager;
+    private logicClass logic;
+    private static int messagesSent = 0;
 
-    public Login(Registration register) {
+    public Login(Registration register, MessageManager manager, logicClass logic) {
         this.register = register;
+        this.manager = manager;
+        this.logic = logic;
     }
 
     public boolean log() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Username");
-        String loginUsername = scan.nextLine();
+        String loginUsername = JOptionPane.showInputDialog("Enter Username:");
+        if (loginUsername == null) return false;
 
-        System.out.println("Enter password");
-        String loginPassword = scan.nextLine();
+        String loginPassword = JOptionPane.showInputDialog("Enter Password:");
+        if (loginPassword == null) return false;
 
         boolean success = checkUserDetails(loginUsername, loginPassword);
 
-        if (success) {
-            JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
-            MessageManager manager = new MessageManager(100);
-            logicClass logic = new logicClass(manager);
-           messMenu(logic, manager);
+        if (!success) {
+            JOptionPane.showMessageDialog(null, "Login failed. Please try again.");
+            return false;
         }
 
-        return success;
+        JOptionPane.showMessageDialog(null, "Welcome to TheChat!");
+        messMenu(); // open messaging menu using shared manager & logic
+        return true;
     }
 
     public boolean checkUserDetails(String username, String password) {
-
-        if (username.equals(register.username)
+        if (register.username != null && register.password != null
+                && username.equals(register.username)
                 && password.equals(register.password)) {
 
-            System.out.println("Hello " + register.name + " " + register.surname + " It is good to have you again.");
+            JOptionPane.showMessageDialog(null,
+                    "Hello " + register.name + " " + register.surname + "! It is good to have you again.");
             return true;
         } else {
-            System.out.println("Username or password is incorrect.");
+            JOptionPane.showMessageDialog(null, "Username or password is incorrect.");
             return false;
         }
-    }// end of check password and username
+    }
 
-    //Mess Menu Methods
-    private static void messMenu(logicClass logic, MessageManager manager) {
-
+    // Non-recursive messaging menu
+    private void messMenu() {
         int choice;
-
         do {
-
-            choice = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Welcome to The Message Menu: \n"
-                    + "1. Send Message\n"
-                    + "2. Search by Message ID\n"
-                    + "3. Search by Hash\n"
-                    + "4. Search by Recipient\n"
-                    + "5. Delete Message\n"
-                    + "6. Exit"));
+            String input = JOptionPane.showInputDialog(
+                    "~~~~~Welcome to The Message Menu:~~~~~ \n"
+                    + "1. Send message\n"
+                    + "2. Show recent messages (from file)\n"
+                    + "3. Display All Sent Messages\n"
+                    + "4. Display Longest Message\n"
+                    + "5. Display Message Report\n"
+                    + "6. Load Sample Test Data\n"
+                    + "7. Logout to Main Menu");
+            if (input == null) return;
+            if (!input.matches("[1-7]")) {
+                JOptionPane.showMessageDialog(null, "Invalid option, try again.");
+                continue;
+            }
+            choice = Integer.parseInt(input);
 
             switch (choice) {
                 case 1:
-                    int numberOfMess = Integer.parseInt(JOptionPane.showInputDialog(null, "Hi there :) How many messages do you want to send?"));
-
+                    String numStr = JOptionPane.showInputDialog("How many messages do you want to send?");
+                    if (numStr == null) break;
+                    int numberOfMess;
+                    try {
+                        numberOfMess = Integer.parseInt(numStr);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Invalid number.");
+                        break;
+                    }
+                    messagesSent = numberOfMess;
                     for (int i = 0; i < numberOfMess; i++) {
-                        // Automatically generate a random 10-digit message ID
                         String id = String.valueOf(1000000000 + new java.util.Random().nextInt(900000000));
-
-                        // Call recipient cell method here
-                        String cell = JOptionPane.showInputDialog(null, "Enter reciever's cell number (+27...)");
+                        String cell = JOptionPane.showInputDialog("Enter receiver's cell number (+27...)");
+                        if (cell == null) break;
                         int validCell = logic.checkRecipientCell(cell);
-
                         if (validCell == 0) {
                             JOptionPane.showMessageDialog(null, "Recipient Number Invalid!");
                             continue;
                         }
-
-                        String text = JOptionPane.showInputDialog(null, "Enter your Message text:");
+                        String text = JOptionPane.showInputDialog("Enter your Message text:");
+                        if (text == null) break;
                         String hash = logic.createMessageHash(id, i + 1, text);
-
                         JOptionPane.showMessageDialog(null, "Message Hash:\n" + hash);
 
-                        JOptionPane.showMessageDialog(null, logic.printMessage());
+                        // Ask user for final status choice (1-send,2-store,3-disregard)
+                        String statusChoice = JOptionPane.showInputDialog(
+                                "Choose options 1-3:\n1. Send Message\n2. Store Message\n3. Disregard Message");
+                        if (statusChoice == null) statusChoice = "1";
+                        String status = logic.sentMessage(statusChoice);
+                        if (status.equals("invalid")) {
+                            JOptionPane.showMessageDialog(null, "Invalid status choice; defaulting to 'sent'.");
+                            status = "sent";
+                        }
 
-                        logic.handleSendMessage(); // Offers sent, stored, or disregarded
+                        // Add & store according to status
+                        logic.handleSendMessage(id, hash, cell, text, status);
                     }
                     break;
                 case 2:
-                    manager.searchByMessageID();
+                    String nStr = JOptionPane.showInputDialog("How many recent messages to show? (e.g. 5)");
+                    if (nStr == null) break;
+                    int n;
+                    try {
+                        n = Integer.parseInt(nStr);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Invalid number.");
+                        break;
+                    }
+                    manager.showRecentMessagesFromJson(n);
                     break;
                 case 3:
-                    manager.searchByMessageHash();
+                    manager.displayAllSentMessages();
                     break;
                 case 4:
-                    manager.searchByRecipient();
+                    manager.displayLongestMessage();
                     break;
                 case 5:
-                    manager.deleteByMessageID();
+                    manager.displayReport();
                     break;
                 case 6:
-                    JOptionPane.showMessageDialog(null, "Exiting the chat");
+                    manager.loadTestData();
+                    JOptionPane.showMessageDialog(null, "Sample data loaded.");
                     break;
-
+                case 7:
+                    JOptionPane.showMessageDialog(null, "Logging out to main menu...");
+                    return;
                 default:
-                    JOptionPane.showMessageDialog(null, "Invaild option, try again.");
-                    break;
+                    JOptionPane.showMessageDialog(null, "Invalid option, try again.");
             }
-
-        } while (choice != 6);
+        } while (true);
     }
 }
