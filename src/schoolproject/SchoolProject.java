@@ -49,9 +49,9 @@ public class SchoolProject {
                         // login.log already shows failure messages
                     }
                     break;
-                    //Load Sample Test Data automatically fills the system with 
-                    //messages so all message features can be tested without sending new messages.
-                    //pick this option before picking the the 4th or 5th option so the messages can load
+                //Load Sample Test Data automatically fills the system with 
+                //messages so all message features can be tested without sending new messages.
+                //pick this option before picking the the 4th or 5th option so the messages can load
                 case 3:
                     int confirm = JOptionPane.showConfirmDialog(null,
                             "This will add sample messages to the system. Continue?",

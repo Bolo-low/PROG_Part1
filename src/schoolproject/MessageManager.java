@@ -2,6 +2,7 @@ package schoolproject;
 
 import javax.swing.JOptionPane;
 import java.io.FileReader;
+import java.io.FileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -113,52 +114,121 @@ public class MessageManager {
         }
     }
 
-    // Search by Message ID
+    // Helper: load messages.json (returns empty JSONArray if file missing or parse error)
+    private JSONArray loadMessagesFromFile() {
+        JSONParser parser = new JSONParser();
+        JSONArray messageList = new JSONArray();
+        try (FileReader reader = new FileReader("messages.json")) {
+            Object obj = parser.parse(reader);
+            if (obj instanceof JSONArray) {
+                messageList = (JSONArray) obj;
+            }
+        } catch (Exception e) {
+            // file missing or parse error -> return empty list (no dialog here)
+        }
+        return messageList;
+    }//end
+
+    // Search by Message ID (reads from JSON file)
     public void searchByMessageID() {
         String idToSearch = JOptionPane.showInputDialog("Enter the Message ID to search for:");
-        if (idToSearch == null || idToSearch.isEmpty()) return;
+        if (idToSearch == null || idToSearch.isEmpty()) {
+            return;
+        }
 
-        for (int i = 0; i < messageCount; i++) {
-            if (idToSearch.equals(messagesID[i])) {
-                JOptionPane.showMessageDialog(null, "Message Found:\n"
-                        + "Message ID: " + messagesID[i] + "\n"
-                        + "Hash: " + messageHash[i] + "\n"
-                        + "Recipient: " + recipients[i] + "\n"
-                        + "Text: " + messagesTexts[i] + "\n"
-                        + "Status: " + messagesStatus[i]);
+        JSONArray messages = loadMessagesFromFile();
+        for (int i = 0; i < messages.size(); i++) {
+            Object o = messages.get(i);
+            if (!(o instanceof JSONObject)) {
+                continue;
+            }
+            JSONObject msg = (JSONObject) o;
+            Object mid = msg.get("Message ID");
+            if (mid != null && idToSearch.equals(mid.toString())) {
+                StringBuilder out = new StringBuilder();
+                out.append("Message Found:\n")
+                        .append("Message ID: ").append(msg.get("Message ID")).append("\n")
+                        .append("Hash: ").append(msg.get("Message Hash")).append("\n")
+                        .append("Recipient: ").append(msg.get("Recipient")).append("\n")
+                        .append("Text: ").append(msg.get("Message")).append("\n")
+                        .append("Status: ").append(msg.get("Status")).append("\n");
+                JOptionPane.showMessageDialog(null, out.toString());
                 return;
             }
         }
         JOptionPane.showMessageDialog(null, "No message found with ID: " + idToSearch);
-    }
+    }//end
 
     // Search by Message Hash
+    // Search by Message Hash (reads from JSON file)
     public void searchByMessageHash() {
         String hashToSearch = JOptionPane.showInputDialog("Enter the message hash:");
-        if (hashToSearch == null || hashToSearch.isEmpty()) return;
+        if (hashToSearch == null || hashToSearch.isEmpty()) {
+            return;
+        }
 
-        for (int i = 0; i < messageCount; i++) {
-            if (hashToSearch.equals(messageHash[i])) {
-                JOptionPane.showMessageDialog(null, "Message Found:\n"
-                        + "Message ID: " + messagesID[i] + "\n"
-                        + "Recipient: " + recipients[i] + "\n"
-                        + "Text: " + messagesTexts[i] + "\n"
-                        + "Status: " + messagesStatus[i]);
+        JSONArray messages = loadMessagesFromFile();
+        for (int i = 0; i < messages.size(); i++) {
+            Object o = messages.get(i);
+            if (!(o instanceof JSONObject)) {
+                continue;
+            }
+            JSONObject msg = (JSONObject) o;
+            Object h = msg.get("Message Hash");
+            if (h != null && hashToSearch.equals(h.toString())) {
+                StringBuilder out = new StringBuilder();
+                out.append("Message Found:\n")
+                        .append("Message ID: ").append(msg.get("Message ID")).append("\n")
+                        .append("Recipient: ").append(msg.get("Recipient")).append("\n")
+                        .append("Text: ").append(msg.get("Message")).append("\n")
+                        .append("Status: ").append(msg.get("Status")).append("\n");
+                JOptionPane.showMessageDialog(null, out.toString());
                 return;
             }
         }
         JOptionPane.showMessageDialog(null, "No message found with hash: " + hashToSearch);
-    }
+    }//end
 
+    
+    private void saveMessagesToFile(JSONArray messageList) {
+    try (FileWriter file = new FileWriter("messages.json")) {
+        file.write(messageList.toJSONString());
+        file.flush();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error saving messages.json: " + e.getMessage());
+    }
+}
+    
     // Delete by message hash
     public void deleteByMessageHash() {
         String hash = JOptionPane.showInputDialog("Enter the message hash to delete:");
-        if (hash == null || hash.isEmpty()) return;
+        if (hash == null || hash.isEmpty()) {
+            return;
+        }
 
+        // Remove from JSON file
+        JSONArray messages = loadMessagesFromFile();
+        boolean removedFromFile = false;
+        for (int i = 0; i < messages.size(); i++) {
+            Object o = messages.get(i);
+            if (!(o instanceof JSONObject)) {
+                continue;
+            }
+            JSONObject msg = (JSONObject) o;
+            Object h = msg.get("Message Hash");
+            if (h != null && hash.equals(h.toString())) {
+                messages.remove(i);
+                saveMessagesToFile(messages);
+                removedFromFile = true;
+                break;
+            }
+        }
+
+        // Also remove from in-memory arrays if present (keeps internal state consistent)
+        boolean removedFromMemory = false;
         for (int i = 0; i < messageCount; i++) {
-            if (hash.equals(messageHash[i])) {
-                String deletedMessage = messagesTexts[i];
-
+            if (messageHash[i] != null && messageHash[i].equals(hash)) {
+                // shift left
                 for (int j = i; j < messageCount - 1; j++) {
                     messagesID[j] = messagesID[j + 1];
                     messageHash[j] = messageHash[j + 1];
@@ -166,28 +236,49 @@ public class MessageManager {
                     messagesTexts[j] = messagesTexts[j + 1];
                     messagesStatus[j] = messagesStatus[j + 1];
                 }
+                // clear last
+                int last = messageCount - 1;
+                messagesID[last] = null;
+                messageHash[last] = null;
+                recipients[last] = null;
+                messagesTexts[last] = null;
+                messagesStatus[last] = null;
                 messageCount--;
-                JOptionPane.showMessageDialog(null, "Message \"" + deletedMessage + "\" successfully deleted.");
-                return;
+                removedFromMemory = true;
+                break;
             }
         }
-        JOptionPane.showMessageDialog(null, "Message hash not found.");
-    }
+
+        if (removedFromFile || removedFromMemory) {
+            JOptionPane.showMessageDialog(null, "Message with hash \"" + hash + "\" successfully deleted.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Message hash not found.");
+        }
+    }//end
 
     // Search by Recipient
     public void searchByRecipient() {
         String recipientToSearch = JOptionPane.showInputDialog("Enter the recipient number (+27...):");
-        if (recipientToSearch == null || recipientToSearch.isEmpty()) return;
+        if (recipientToSearch == null || recipientToSearch.isEmpty()) {
+            return;
+        }
 
+        JSONArray messages = loadMessagesFromFile();
         StringBuilder result = new StringBuilder("Messages sent to " + recipientToSearch + ":\n\n");
         boolean found = false;
 
-        for (int i = 0; i < messageCount; i++) {
-            if (recipientToSearch.equals(recipients[i])) {
-                result.append("Message ID: ").append(messagesID[i]).append("\n")
-                        .append("Hash: ").append(messageHash[i]).append("\n")
-                        .append("Text: ").append(messagesTexts[i]).append("\n")
-                        .append("Status: ").append(messagesStatus[i]).append("\n")
+        for (int i = 0; i < messages.size(); i++) {
+            Object o = messages.get(i);
+            if (!(o instanceof JSONObject)) {
+                continue;
+            }
+            JSONObject msg = (JSONObject) o;
+            Object r = msg.get("Recipient");
+            if (r != null && recipientToSearch.equals(r.toString())) {
+                result.append("Message ID: ").append(msg.get("Message ID")).append("\n")
+                        .append("Hash: ").append(msg.get("Message Hash")).append("\n")
+                        .append("Text: ").append(msg.get("Message")).append("\n")
+                        .append("Status: ").append(msg.get("Status")).append("\n")
                         .append("-----------------------------\n");
                 found = true;
             }
@@ -198,7 +289,7 @@ public class MessageManager {
         } else {
             JOptionPane.showMessageDialog(null, "No messages found for " + recipientToSearch);
         }
-    }
+    }//end
 
     public void displayReport() {
         if (messageCount == 0) {
@@ -290,4 +381,5 @@ public class MessageManager {
         }
         JOptionPane.showMessageDialog(null, out.toString());
     }
+
 }

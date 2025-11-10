@@ -1,1 +1,133 @@
-[{"Message Hash":"17:1:HEYBONOLO","Status":"sent","Message":"Hey There Bonolo","Recipient":"+27671495415","Message ID":"1760749379"},{"Message Hash":"16:2:HOWCHOMI","Status":"sent","Message":"How are you chomi","Recipient":"+27679415145","Message ID":"1603711930"},{"Message Hash":"14:1:","Status":"sent","Message":"","Recipient":"+27671495415","Message ID":"1461770440"},{"Message Hash":"15:1:BAEBAE","Status":"sent","Message":"Bae","Recipient":"+27869675432","Message ID":"1588880558"},{"Message Hash":"16:2:YOMAMA","Status":"sent","Message":"yo mama","Recipient":"+27654657867","Message ID":"1630033785"},{"Message Hash":"16:1:YOBOO","Status":"sent","Message":"Yo wassup boo","Recipient":"+27671495415","Message ID":"1679773834"},{"Message Hash":"15:2:IBONOLO","Status":"sent","Message":"I love you bonolo","Recipient":"+27876453542","Message ID":"1511078361"},{"Message Hash":"16:1:HEYBEAR","Status":"sent","Message":"Hey Boo Bear","Recipient":"+27671495415","Message ID":"1601889655"},{"Message Hash":"15:1:HEYTHERE","Status":"sent","Message":"hey there","Recipient":"+27785445535","Message ID":"1566644391"},{"Message Hash":"11:2:YOGOOD","Status":"sent","Message":"Yo wass good","Recipient":"+27896546677","Message ID":"1165142132"},{"Message Hash":"17:1:GOODDAY","Status":"sent","Message":"Good day","Recipient":"+27671495415","Message ID":"1706136283"},{"Message Hash":"13:2:GOODMORNING","Status":"sent","Message":"Good Morning","Recipient":"+27671495415","Message ID":"1355634459"},{"Message Hash":"17:1:HEYMA'AM","Status":"sent","Message":"Hey ma'am ","Recipient":"+27769414551","Message ID":"1704132573"},{"Message Hash":"12:2:JINKEDWAY","Status":"sent","Message":"jinked in the wrong way","Recipient":"+27877896543","Message ID":"1260129480"},{"Message Hash":"11:2:HEYBONOLO","Status":"sent","Message":"Hey Bonolo","Recipient":"+27764914514","Message ID":"1162346174"},{"Message Hash":"14:1:HEYTHERE","Status":"sent","Message":"Hey there","Recipient":"+27764296453","Message ID":"1482483137"},{"Message Hash":"14:2:GOODMORNING","Status":"sent","Message":"Good Morning","Recipient":"+27763564765","Message ID":"1401403604"},{"Message Hash":"13:1:HEYYBOO","Status":"sent","Message":"Heyy Boo","Recipient":"+27676454352","Message ID":"1316619007"},{"Message Hash":"17:1:HEYTHERE","Status":"sent","Message":"Hey there ","Recipient":"+27774564321","Message ID":"1764532214"},{"Message Hash":"10:2:HOWYOU?","Status":"stored","Message":"How are you?","Recipient":"+27865467864","Message ID":"1091274223"}]
+[{
+        "Message Hash": "17:1:HEYBONOLO",
+        "Status": "sent",
+        "Message": "Hey There Bonolo",
+        "Recipient": "+27671495415",
+        "Message ID": "1760749379"
+    }, {
+        "Message Hash": "16:2:HOWCHOMI",
+        "Status": "sent",
+        "Message": "How are you chomi",
+        "Recipient": "+27679415145",
+        "Message ID": "1603711930"
+    }, {
+        "Message Hash": "15:1:BAEBAE",
+        "Status": "sent",
+        "Message": "Bae",
+        "Recipient": "+27869675432",
+        "Message ID": "1588880558"
+    }, {
+        "Message Hash": "16:2:YOMAMA",
+        "Status": "sent",
+        "Message": "yo mama",
+        "Recipient": "+27654657867",
+        "Message ID": "1630033785"
+    }, {
+        "Message Hash": "16:1:YOBOO",
+        "Status": "sent",
+        "Message": "Yo wassup boo",
+        "Recipient": "+27671495415",
+        "Message ID": "1679773834"
+    }, {
+        "Message Hash": "15:2:IBONOLO",
+        "Status": "sent",
+        "Message": "I love you bonolo",
+        "Recipient": "+27876453542",
+        "Message ID": "1511078361"
+    }, {
+        "Message Hash": "16:1:HEYBEAR",
+        "Status": "sent",
+        "Message": "Hey Boo Bear",
+        "Recipient": "+27671495415",
+        "Message ID": "1601889655"
+    }, {
+        "Message Hash": "15:1:HEYTHERE",
+        "Status": "sent",
+        "Message": "hey there",
+        "Recipient": "+27785445535",
+        "Message ID": "1566644391"
+    }, {
+        "Message Hash": "11:2:YOGOOD",
+        "Status": "sent",
+        "Message": "Yo wass good",
+        "Recipient": "+27896546677",
+        "Message ID": "1165142132"
+    }, {
+        "Message Hash": "17:1:GOODDAY",
+        "Status": "sent",
+        "Message": "Good day",
+        "Recipient": "+27671495415",
+        "Message ID": "1706136283"
+    }, {
+        "Message Hash": "13:2:GOODMORNING",
+        "Status": "sent",
+        "Message": "Good Morning",
+        "Recipient": "+27671495415",
+        "Message ID": "1355634459"
+    }, {
+        "Message Hash": "17:1:HEYMA'AM",
+        "Status": "sent",
+        "Message": "Hey ma'am ",
+        "Recipient": "+27769414551",
+        "Message ID": "1704132573"
+    }, {
+        "Message Hash": "12:2:JINKEDWAY",
+        "Status": "sent",
+        "Message": "jinked in the wrong way",
+        "Recipient": "+27877896543",
+        "Message ID": "1260129480"
+    }, {
+        "Message Hash": "11:2:HEYBONOLO",
+        "Status": "sent",
+        "Message": "Hey Bonolo",
+        "Recipient": "+27764914514",
+        "Message ID": "1162346174"
+    }, {
+        "Message Hash": "14:1:HEYTHERE",
+        "Status": "sent",
+        "Message": "Hey there",
+        "Recipient": "+27764296453",
+        "Message ID": "1482483137"
+    }, {
+        "Message Hash": "14:2:GOODMORNING",
+        "Status": "sent",
+        "Message": "Good Morning",
+        "Recipient": "+27763564765",
+        "Message ID": "1401403604"
+    }, {
+        "Message Hash": "13:1:HEYYBOO",
+        "Status": "sent",
+        "Message": "Heyy Boo",
+        "Recipient": "+27676454352",
+        "Message ID": "1316619007"
+    }, {
+        "Message Hash": "17:1:HEYTHERE",
+        "Status": "sent",
+        "Message": "Hey there ",
+        "Recipient": "+27774564321",
+        "Message ID": "1764532214"
+    }, {
+        "Message Hash": "10:2:HOWYOU?",
+        "Status": "stored",
+        "Message": "How are you?",
+        "Recipient": "+27865467864",
+        "Message ID": "1091274223"
+    }, {
+        "Message Hash": "17:1:HEYSIR",
+        "Status": "sent",
+        "Message": "Hey sir ",
+        "Recipient": "+27671495415",
+        "Message ID": "1736561820"
+    }, {
+        "Message Hash": "14:2:HOWSIR",
+        "Status": "stored",
+        "Message": "How are you doing, sir",
+        "Recipient": "+27867563987",
+        "Message ID": "1494250694"
+    }, {
+        "Message Hash": "10:1:TEST1",
+        "Status": "sent",
+        "Message": "Test 1",
+        "Recipient": "+27896574536",
+        "Message ID": "1032964657"
+    }]

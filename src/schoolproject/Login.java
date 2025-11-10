@@ -17,10 +17,14 @@ public class Login {
 
     public boolean log() {
         String loginUsername = JOptionPane.showInputDialog("Enter Username:");
-        if (loginUsername == null) return false;
+        if (loginUsername == null) {
+            return false;
+        }
 
         String loginPassword = JOptionPane.showInputDialog("Enter Password:");
-        if (loginPassword == null) return false;
+        if (loginPassword == null) {
+            return false;
+        }
 
         boolean success = checkUserDetails(loginUsername, loginPassword);
 
@@ -57,11 +61,14 @@ public class Login {
                     + "1. Send message\n"
                     + "2. Show recent messages (from file)\n"
                     + "3. Display All Sent Messages\n"
-                    + "4. Display Longest Message\n"
-                    + "5. Display Message Report\n"
-                    + "6. Load Sample Test Data\n"
-                    + "7. Logout to Main Menu");
-            if (input == null) return;
+                    + "4. Search by MessageID\n"
+                    + "5. Search by Message Hash\n"
+                    + "6. Delete by Message Hash\n"
+                    + "7. Search by Message recipient\n"
+                    + "8. Logout to Main Menu");
+            if (input == null) {
+                return;
+            }
             if (!input.matches("[1-7]")) {
                 JOptionPane.showMessageDialog(null, "Invalid option, try again.");
                 continue;
@@ -71,7 +78,9 @@ public class Login {
             switch (choice) {
                 case 1:
                     String numStr = JOptionPane.showInputDialog("How many messages do you want to send?");
-                    if (numStr == null) break;
+                    if (numStr == null) {
+                        break;
+                    }
                     int numberOfMess;
                     try {
                         numberOfMess = Integer.parseInt(numStr);
@@ -83,21 +92,27 @@ public class Login {
                     for (int i = 0; i < numberOfMess; i++) {
                         String id = String.valueOf(1000000000 + new java.util.Random().nextInt(900000000));
                         String cell = JOptionPane.showInputDialog("Enter receiver's cell number (+27...)");
-                        if (cell == null) break;
+                        if (cell == null) {
+                            break;
+                        }
                         int validCell = logic.checkRecipientCell(cell);
                         if (validCell == 0) {
                             JOptionPane.showMessageDialog(null, "Recipient Number Invalid!");
                             continue;
                         }
                         String text = JOptionPane.showInputDialog("Enter your Message text:");
-                        if (text == null) break;
+                        if (text == null) {
+                            break;
+                        }
                         String hash = logic.createMessageHash(id, i + 1, text);
                         JOptionPane.showMessageDialog(null, "Message Hash:\n" + hash);
 
                         // Ask user for final status choice (1-send,2-store,3-disregard)
                         String statusChoice = JOptionPane.showInputDialog(
                                 "Choose options 1-3:\n1. Send Message\n2. Store Message\n3. Disregard Message");
-                        if (statusChoice == null) statusChoice = "1";
+                        if (statusChoice == null) {
+                            statusChoice = "1";
+                        }
                         String status = logic.sentMessage(statusChoice);
                         if (status.equals("invalid")) {
                             JOptionPane.showMessageDialog(null, "Invalid status choice; defaulting to 'sent'.");
@@ -110,7 +125,9 @@ public class Login {
                     break;
                 case 2:
                     String nStr = JOptionPane.showInputDialog("How many recent messages to show? (e.g. 5)");
-                    if (nStr == null) break;
+                    if (nStr == null) {
+                        break;
+                    }
                     int n;
                     try {
                         n = Integer.parseInt(nStr);
@@ -124,16 +141,18 @@ public class Login {
                     manager.displayAllSentMessages();
                     break;
                 case 4:
-                    manager.displayLongestMessage();
+                    manager.searchByMessageID();
                     break;
                 case 5:
-                    manager.displayReport();
+                    manager.searchByMessageHash();
                     break;
                 case 6:
-                    manager.loadTestData();
-                    JOptionPane.showMessageDialog(null, "Sample data loaded.");
+                    manager.deleteByMessageHash();
                     break;
                 case 7:
+                    manager.searchByRecipient();
+                    break;
+                case 8:
                     JOptionPane.showMessageDialog(null, "Logging out to main menu...");
                     return;
                 default:
